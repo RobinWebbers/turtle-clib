@@ -14,6 +14,11 @@ libraries:
 - To set the target of the Makefiles of the libraries, set "ARGS" (e.g. to clean
   all libraries: make ARGS=clean)
 
+## Fork
+
+To make life easier when you want to add your own library, you can copy the
+generic makefile in each of the library directories.
+
 ## Libraries
 
 All libraries have header files with function definitions. Consult these if you
@@ -29,4 +34,4 @@ structures. Their respective static datastructure is postfixed with a "s", e.g.
 ### Pack
 
 Currently, pack only has functions to set integer data into a char array. This
-library will probably be added to some other library in the future.
+library will probably be added to some other library a future update.

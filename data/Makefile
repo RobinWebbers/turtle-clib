@@ -1,5 +1,7 @@
 .PHONY: clean
 
+PDIR = $(shell basename "$$PWD")
+
 IDIR = inc
 SDIR = src
 ODIR = obj
@@ -11,11 +13,14 @@ INC := $(wildcard $(IDIR)/*.h)
 SRC := $(wildcard $(SDIR)/*.c)
 OBJ := $(patsubst $(SDIR)/%.c, $(ODIR)/%.o, $(SRC))
 
-$(ODIR)/%.o: $(SDIR)/%.c
+$(ODIR)/%.o: $(SDIR)/%.c | $(ODIR)
 	$(CC) -MMD $(CFLAGS) -fPIC -c -o $@ $<
 
-libdata.so: $(OBJ)
+lib$(PDIR).so: $(OBJ)
 	$(CC) -o $@ $^ -shared $(CFLAGS)
+
+$(ODIR):
+	mkdir -p $@
 
 clean:
 	-rm -f $(ODIR)/*.o *~ core.* $(IDIR)/*~
