@@ -3,6 +3,14 @@
 
 #include "stackd.h"
 
+/*
+ * Queued
+ * ******
+ * A dynamic queue. To use this datastructure, allocate the Queued struct and
+ * init the queue. There is no need to destroy the stack, you should make sure
+ * to empty the queue if there are malloced elements in there. The queue is
+ * singly linked and generic.
+ */
 struct Queued
 {
     struct Stackd *head, *tail;

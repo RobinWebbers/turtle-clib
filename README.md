@@ -16,7 +16,7 @@ libraries:
 
 ## Fork
 
-To make life easier when you want to add your own library, you can copy the
+To make life easier when you want to contribute to the code, you can copy the
 generic makefile in each of the library directories.
 
 ## Libraries

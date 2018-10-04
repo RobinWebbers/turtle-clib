@@ -1,6 +1,13 @@
 #ifndef STACKD_H
 #define STACKD_H
 
+/*
+ * Stackd
+ * ******
+ * A dynamic stack. To use this datastructure, instantiate a struct Stackd * and
+ * set it to NULL. When a double pointer is required for these functions,
+ * reference the stack *. This stack is a singly linked list and generic.
+ */
 struct Stackd
 {
     struct Stackd *next;

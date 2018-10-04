@@ -2,51 +2,39 @@
 #include <stdlib.h>
 #include <stddef.h>
 
-void init_stacks(struct Stacks *stack, size_t nitems, size_t size)
+void stacks_init(struct Stacks *stack, unsigned int capacity)
 {
-    stack->top = 0;
-    stack->nitems = nitems;
-    stack->size = size;
-    stack->data = malloc(size * nitems);
+    stack->size = 0;
+    stack->capacity = capacity;
+    stack->data = malloc(capacity * sizeof(void *));
 }
 
 void stacks_push(struct Stacks *stack, void *data)
 {
-    char *src = data;
-    char *dest = stack->data;
-    dest += stack->size * stack->top++;
-    for(int i = 0;  i < stack->size; i++)
-        dest[i] = src[i];
+    stack->data[stack->size++] = data;
 }
 
 void *stacks_pop(struct Stacks *stack)
 {
-    char *data = stack->data;
-    return &data[--stack->top * stack->size];
+    return stack->data[--stack->size];
 }
 
 void *stacks_peek(struct Stacks *stack)
 {
-    char *data = stack->data;
-    return &data[stack->top * stack->size];
+    return stack->data[stack->size - 1];
 }
 
-size_t stacks_nitems(struct Stacks *stack)
+unsigned int stacks_capacity(struct Stacks *stack)
 {
-    return stack->nitems;
+    return stack->capacity;
 }
 
-size_t stacks_size(struct Stacks *stack)
+unsigned int stacks_size(struct Stacks *stack)
 {
     return stack->size;
 }
 
-size_t stacks_top(struct Stacks *stack)
-{
-    return stack->top;
-}
-
-void destroy_stacks(struct Stacks *stack)
+void stacks_destroy(struct Stacks *stack)
 {
     free(stack->data);
 }
