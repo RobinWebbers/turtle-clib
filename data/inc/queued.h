@@ -122,7 +122,7 @@ void *queued_peekl(struct Queued *queue);
  *
  * @return            - Number of elements in the queue.
  */
-int queued_size(struct Queued *queue);
+unsigned int queued_size(struct Queued *queue);
 
 /*
  * queued_isEmpty()
@@ -186,7 +186,7 @@ void queued_insert(struct Queued *queue, void *data, int index);
  * @param index       - The index at which the element should be removed.
  *                      starting from the head of the queue.
  *
- * @return            - void
+ * @return            - A pointer to a datastructure held by the removed node.
  */
 void *queued_remove(struct Queued *queue, int index);
 

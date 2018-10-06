@@ -26,7 +26,7 @@ void *stackd_peek(struct Stackd *stack)
     return stack->data;
 }
 
-int stackd_size(struct Stackd *stack)
+unsigned int stackd_size(struct Stackd *stack)
 {
     int size = 0;
     for(; stack != NULL; stack = stack->next)
@@ -51,7 +51,7 @@ void stackd_reverse(struct Stackd **stack)
     }
 }
 
-void stackd_insert(struct Stackd **stack, void *data, int index)
+void stackd_insert(struct Stackd **stack, void *data, unsigned int index)
 {
     struct Stackd **curr, *insert;
     curr = stack;
@@ -65,7 +65,7 @@ void stackd_insert(struct Stackd **stack, void *data, int index)
     *curr = insert;
 }
 
-void *stackd_remove(struct Stackd **stack, int index)
+void *stackd_remove(struct Stackd **stack, unsigned int index)
 {
     struct Stackd **curr, *del;
     void *data;

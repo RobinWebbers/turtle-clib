@@ -75,7 +75,7 @@ void *stackd_peek(struct Stackd *stack);
  *
  * @return            - Number of elements on the stack.
  */
-int stackd_size(struct Stackd *stack);
+unsigned int stackd_size(struct Stackd *stack);
 
 /*
  * stackd_reverse()
@@ -109,7 +109,7 @@ void stackd_reverse(struct Stackd **stack);
  *
  * @return            - void
  */
-void stackd_insert(struct Stackd **stack, void *data, int index);
+void stackd_insert(struct Stackd **stack, void *data, unsigned int index);
 
 /*
  * stackd_remove()
@@ -127,7 +127,7 @@ void stackd_insert(struct Stackd **stack, void *data, int index);
  * @return            - A pointer to the datastructure the node which was
  *                      removed held.
  */
-void *stackd_remove(struct Stackd **stack, int index);
+void *stackd_remove(struct Stackd **stack, unsigned int index);
 
 /*
  * stackd_pushl()

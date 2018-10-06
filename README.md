@@ -2,9 +2,9 @@
 
 Hi there fellow c programmer,
 
-To make my (and probably your) life easier, I've made some c libraries. Use them
-as you please. If you find any bugs or things I could improve on, I'd be glad to
-hear.
+To make my (and hopefully your) life easier, I've made some c libraries. Use
+them as you please. If you find any bugs or things I could improve on, I'd be
+glad to hear.
 
 ## Usage
 
@@ -35,3 +35,9 @@ structures. Their respective static datastructure is postfixed with a "s", e.g.
 
 Currently, pack only has functions to set integer data into a char array. This
 library will probably be added to some other library a future update.
+
+## Future plans
+- Add hashtable to data library
+- Add binary search tree to data library
+- Add matrix to data library
+- Add doubly linked list

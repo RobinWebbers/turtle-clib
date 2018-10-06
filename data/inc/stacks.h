@@ -18,7 +18,8 @@ struct Stacks
 /*
  * stacks_init()
  * *************
- * Initiate the stack to have the set capacity of data.
+ * Initiate the stack with the desired capacity. This function must be called
+ * for the static stack to work correctly.
  *
  * Complexity:
  * O(1)

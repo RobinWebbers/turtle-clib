@@ -48,7 +48,7 @@ void *queued_peekl(struct Queued *queue)
     return queue->tail->data;
 }
 
-int queued_size(struct Queued *queue)
+unsigned int queued_size(struct Queued *queue)
 {
     return stackd_size(queue->head);
 }
