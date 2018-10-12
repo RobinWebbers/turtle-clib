@@ -2,6 +2,7 @@
 #define QUEUED_H
 
 #include "stackd.h"
+#include <stdbool.h>
 
 /*
  * Queued
@@ -136,7 +137,7 @@ unsigned int queued_size(struct Queued *queue);
  *
  * @return            - Returns true if the queue is empty.
  */
-int queued_isEmpty(struct Queued *queue);
+bool queued_isEmpty(struct Queued *queue);
 
 /*
  * queued_reverse()

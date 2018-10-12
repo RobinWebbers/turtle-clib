@@ -110,8 +110,8 @@ unsigned int queues_capacity(struct Queues *queue);
 unsigned int queues_size(struct Queues *queue);
 
 /*
- * queues_size()
- * *************
+ * queues_destroy()
+ * ****************
  * Frees the array in which the elements are stored.
  *
  * Complexity:

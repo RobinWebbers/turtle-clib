@@ -1,5 +1,5 @@
 #include "queued.h"
-#include "stdlib.h"
+#include <stdlib.h>
 
 void queued_init(struct Queued *queue)
 {
@@ -53,7 +53,7 @@ unsigned int queued_size(struct Queued *queue)
     return stackd_size(queue->head);
 }
 
-int queued_isEmpty(struct Queued *queue)
+bool queued_isEmpty(struct Queued *queue)
 {
     return queue->tail == NULL;
 }
