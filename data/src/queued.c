@@ -1,59 +1,60 @@
 #include "queued.h"
+#include <string.h>
 #include <stdlib.h>
 
-void queued_init(struct Queued *queue)
+void queued_init(struct Queued *queue, unsigned int structsize)
 {
     queue->head = NULL;
     queue->tail = NULL;
+    queue->structsize = structsize;
 }
 
-void queued_enqueue(struct Queued *queue, void *data)
+void queued_enqueue(struct Queued *queue, const void *data)
 {
     if(queue->tail == NULL)
     {
-        queue->tail = malloc(sizeof(struct Stackd));
+        queue->tail = malloc(sizeof(struct Stackd) + queue->structsize);
         queue->head = queue->tail;
     }
     else
     {
-        queue->tail->next = malloc(sizeof(struct Stackd));
+        queue->tail->next = malloc(sizeof(struct Stackd) + queue->structsize);
         queue->tail = queue->tail->next;
     }
     queue->tail->next = NULL;
-    queue->tail->data = data;
+    memcpy(queue->tail + 1, data, queue->structsize);
 }
 
-void *queued_dequeue(struct Queued *queue)
+void queued_dequeue(struct Queued *queue, void *data)
 {
-    void *data = stackd_pop(&(queue->head));
+    stackd_pop(&(queue->head), data, queue->structsize);
     if(queue->head == NULL)
         queue->tail = NULL;
-    return data;
 }
 
-void *queued_peek(struct Queued *queue)
+void queued_peek(const struct Queued *queue, void *data)
 {
-    return queue->head->data;
+    memcpy(data, queue->head + 1, queue->structsize);
 }
 
-void queued_push(struct Queued *queue, void *data)
+void queued_push(struct Queued *queue, const void *data)
 {
-    stackd_push(&(queue->head), data);
+    stackd_push(&(queue->head), data, queue->structsize);
     if(queue->tail == NULL)
         queue->tail = queue->head;
 }
 
-void *queued_peekl(struct Queued *queue)
+void queued_peekLast(const struct Queued *queue, void *data)
 {
-    return queue->tail->data;
+    memcpy(data, queue->tail + 1, queue->structsize);
 }
 
-unsigned int queued_size(struct Queued *queue)
+unsigned int queued_size(const struct Queued *queue)
 {
     return stackd_size(queue->head);
 }
 
-bool queued_isEmpty(struct Queued *queue)
+bool queued_isEmpty(const struct Queued *queue)
 {
     return queue->tail == NULL;
 }
@@ -64,21 +65,20 @@ void queued_reverse(struct Queued *queue)
     stackd_reverse(&(queue->head));
 }
 
-void queued_insert(struct Queued *queue, void *data, int index)
+void queued_insert(struct Queued *queue, const void *data, int index)
 {
-    stackd_insert(&(queue->head), data, index);
+    stackd_insert(&(queue->head), data, queue->structsize, index);
     if(queue->tail == NULL)
         queue->tail = queue->head;
     else if(queue->tail->next != NULL)
         queue->tail = queue->tail->next;
 }
 
-void *queued_remove(struct Queued *queue, int index)
+void queued_remove(struct Queued *queue, void *data, int index)
 {
     //del is also used as previously accessed node to adjust the tail when
     //removing the last item in the queue. This is done before deleting.
     struct Stackd **curr, *del;
-    void *data;
     del = NULL;
     curr = &(queue->head);
 
@@ -93,7 +93,6 @@ void *queued_remove(struct Queued *queue, int index)
 
     del = *curr;
     *curr = del->next;
-    data = del->data;
+    memcpy(data, del + 1, queue->structsize);
     free(del);
-    return data;
 }

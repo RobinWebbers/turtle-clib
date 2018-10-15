@@ -1,32 +1,31 @@
 #include "stackd.h"
 #include <stdlib.h>
+#include <string.h>
 
-void stackd_push(struct Stackd **stack, void *data)
+void stackd_push(struct Stackd **stack, const void *data, unsigned int structsize)
 {
     struct Stackd *top;
-    top = malloc(sizeof(struct Stackd));
+    top = malloc(sizeof(struct Stackd) + structsize);
     top->next = *stack;
-    top->data = data;
+    memcpy(top + 1, data, structsize);
     *stack = top;
 }
 
-void *stackd_pop(struct Stackd **stack)
+void stackd_pop(struct Stackd **stack, void *data, unsigned int structsize)
 {
     struct Stackd *top;
-    void *data;
     top = *stack;
-    data = (**stack).data;
+    memcpy(data, top + 1, structsize);
     *stack = (**stack).next;
     free(top);
-    return data;
 }
 
-void *stackd_peek(struct Stackd *stack)
+void stackd_peek(const struct Stackd *stack, void *data, unsigned int structsize)
 {
-    return stack->data;
+    memcpy(data, stack + 1, structsize);
 }
 
-unsigned int stackd_size(struct Stackd *stack)
+unsigned int stackd_size(const struct Stackd *stack)
 {
     int size = 0;
     for(; stack != NULL; stack = stack->next)
@@ -51,7 +50,7 @@ void stackd_reverse(struct Stackd **stack)
     }
 }
 
-void stackd_insert(struct Stackd **stack, void *data, unsigned int index)
+void stackd_insert(struct Stackd **stack, const void *data, unsigned int structsize, unsigned int index)
 {
     struct Stackd **curr, *insert;
     curr = stack;
@@ -59,16 +58,15 @@ void stackd_insert(struct Stackd **stack, void *data, unsigned int index)
     for(int i = 0; i < index; i++)
         curr = &((**curr).next);
 
-    insert = malloc(sizeof(struct Stackd));
-    insert->data = data;
+    insert = malloc(sizeof(struct Stackd) + structsize);
+    memcpy(insert + 1, data, structsize);
     insert->next = *curr;
     *curr = insert;
 }
 
-void *stackd_remove(struct Stackd **stack, unsigned int index)
+void stackd_remove(struct Stackd **stack, void *data, unsigned int structsize, unsigned int index)
 {
     struct Stackd **curr, *del;
-    void *data;
     curr = stack;
 
     for(int i = 0; i < index; i++)
@@ -76,12 +74,11 @@ void *stackd_remove(struct Stackd **stack, unsigned int index)
 
     del = *curr;
     *curr = del->next;
-    data = del->data;
+    memcpy(data, del + 1, structsize);
     free(del);
-    return data;
 }
 
-void stackd_pushl(struct Stackd **stack, void *data)
+void stackd_pushLast(struct Stackd **stack, const void *data, unsigned int structsize)
 {
     struct Stackd **curr, *insert;
     curr = stack;
@@ -89,31 +86,29 @@ void stackd_pushl(struct Stackd **stack, void *data)
     while(*curr != NULL)
         curr = &((**curr).next);
 
-    insert = malloc(sizeof(struct Stackd));
-    insert->data = data;
+    insert = malloc(sizeof(struct Stackd) + structsize);
+    memcpy(insert + 1, data, structsize);
     insert->next = NULL;
     *curr = insert;
 }
 
-void *stackd_popl(struct Stackd **stack)
+void stackd_popLast(struct Stackd **stack, void *data, unsigned int structsize)
 {
     struct Stackd **curr;
-    void *data;
     curr = stack;
 
     while((**curr).next != NULL)
         curr = &((**curr).next);
 
-    data = (**curr).data;
+    memcpy(data, *curr + 1, structsize);
     free(*curr);
     *curr = NULL;
-    return data;
 }
 
-void *stackd_peekl(struct Stackd *stack)
+void stackd_peekLast(const struct Stackd *stack, void *data, unsigned int structsize)
 {
     for(; stack->next != NULL; stack = stack->next)
         ;//move to the last node
 
-    return stack->data;
+    memcpy(data, stack + 1, structsize);
 }

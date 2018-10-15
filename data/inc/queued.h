@@ -15,6 +15,7 @@
 struct Queued
 {
     struct Stackd *head, *tail;
+    unsigned int structsize;
 };
 
 /*
@@ -30,7 +31,7 @@ struct Queued
  *
  * @return            - void
  */
-void queued_init(struct Queued *queue);
+void queued_init(struct Queued *queue, unsigned int structsize);
 
 /*
  * queued_enqueue()
@@ -47,7 +48,7 @@ void queued_init(struct Queued *queue);
  *
  * @return            - void
  */
-void queued_enqueue(struct Queued *queue, void *data);
+void queued_enqueue(struct Queued *queue, const void *data);
 
 /*
  * queued_dequeue()
@@ -61,7 +62,7 @@ void queued_enqueue(struct Queued *queue, void *data);
  *
  * @return            - A pointer to a datastructure held by the removed node.
  */
-void *queued_dequeue(struct Queued *queue);
+void queued_dequeue(struct Queued *queue, void *data);
 
 /*
  * queued_peek()
@@ -77,7 +78,7 @@ void *queued_dequeue(struct Queued *queue);
  * @return            - A pointer to a datastructure held by the head of the
  *                      queue.
  */
-void *queued_peek(struct Queued *queue);
+void queued_peek(const struct Queued *queue, void *data);
 
 /*
  * queued_push()
@@ -93,7 +94,7 @@ void *queued_peek(struct Queued *queue);
  *
  * @return            - void
  */
-void queued_push(struct Queued *queue, void *data);
+void queued_push(struct Queued *queue, const void *data);
 
 /*
  * queued_peekl()
@@ -109,7 +110,7 @@ void queued_push(struct Queued *queue, void *data);
  * @return            - A pointer to a datastructure held by the tail of the
  *                      queue.
  */
-void *queued_peekl(struct Queued *queue);
+void queued_peekLast(const struct Queued *queue, void *data);
 
 /*
  * queued_size()
@@ -123,7 +124,7 @@ void *queued_peekl(struct Queued *queue);
  *
  * @return            - Number of elements in the queue.
  */
-unsigned int queued_size(struct Queued *queue);
+unsigned int queued_size(const struct Queued *queue);
 
 /*
  * queued_isEmpty()
@@ -137,7 +138,7 @@ unsigned int queued_size(struct Queued *queue);
  *
  * @return            - Returns true if the queue is empty.
  */
-bool queued_isEmpty(struct Queued *queue);
+bool queued_isEmpty(const struct Queued *queue);
 
 /*
  * queued_reverse()
@@ -171,7 +172,7 @@ void queued_reverse(struct Queued *queue);
  *
  * @return            - void
  */
-void queued_insert(struct Queued *queue, void *data, int index);
+void queued_insert(struct Queued *queue, const void *data, int index);
 
 /*
  * queued_remove()
@@ -189,6 +190,6 @@ void queued_insert(struct Queued *queue, void *data, int index);
  *
  * @return            - A pointer to a datastructure held by the removed node.
  */
-void *queued_remove(struct Queued *queue, int index);
+void queued_remove(struct Queued *queue, void *data, int index);
 
 #endif
