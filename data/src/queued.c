@@ -59,6 +59,11 @@ bool queued_isEmpty(const struct Queued *queue)
     return queue->tail == NULL;
 }
 
+unsigned int queued_structsize(const struct Queued *queue)
+{
+    return queue->structsize;
+}
+
 void queued_reverse(struct Queued *queue)
 {
     queue->tail = queue->head;

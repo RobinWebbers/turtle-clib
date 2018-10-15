@@ -156,6 +156,20 @@ unsigned int queued_size(const struct Queued *queue);
 bool queued_isEmpty(const struct Queued *queue);
 
 /*
+ * queued_structsize()
+ * *******************
+ * Returns the size of the elements stored in the queue.
+ *
+ * Complexity:
+ * O(1)
+ *
+ * @param queue       - A reference to the queued of the user.
+ *
+ * @return            - The size of the structs in the queue.
+ */
+unsigned int queued_structsize(const struct Queued *queue);
+
+/*
  * queued_reverse()
  * ****************
  * Reverse the order of the queue.

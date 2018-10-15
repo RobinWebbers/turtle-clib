@@ -6,13 +6,16 @@
  * ******
  * A static queue. To use this datastructure, allocate the Queued struct and
  * init the queue. Destroy the queue when you are not using it and there are no
- * more malloced structures in there that can otherwise not be freed. The Queues
- * struct is generic.
+ * more malloced structures in there that can otherwise not be freed. Any type
+ * of datastructure can be referenced to be copied onto the stack. For larger
+ * datastructures, storing a pointer to this datastructure is adviced. Small
+ * datastructures can be copied directly to avoid the overhead of the saved
+ * pointer.
  */
 struct Queues
 {
-    unsigned int head, tail, capacity, size;
-    void **data;
+    unsigned int head, tail, capacity, size, structsize;
+    void *data;
 };
 
 /*
@@ -28,9 +31,12 @@ struct Queues
  *
  * @param capacity    - The maximum number of elements in the queue.
  *
+ * @param structsize  - The size of the datastructure which will be copied into
+ *                      the stack.
+ *
  * @return            - void
  */
-void queues_init(struct Queues *queue, unsigned int capacity);
+void queues_init(struct Queues *queue, unsigned int capacity, unsigned int structsize);
 
 /*
  * queues_enqueue()
@@ -47,7 +53,7 @@ void queues_init(struct Queues *queue, unsigned int capacity);
  *
  * @return            - void
  */
-void queues_enqueue(struct Queues *queue, void *data);
+void queues_enqueue(struct Queues *queue, const void *data);
 
 /*
  * queues_dequeue()
@@ -60,10 +66,12 @@ void queues_enqueue(struct Queues *queue, void *data);
  *
  * @param queue       - A reference to the queues of the user.
  *
- * @return            - A pointer to a datastructure which was the previous head
- *                      of the queue.
+ * @param data        - A buffer into which the data from the dequeued element
+ *                      is copied.
+ *
+ * @return            - void
  */
-void *queues_dequeue(struct Queues *queue);
+void queues_dequeue(struct Queues *queue, void *data);
 
 /*
  * queues_peek()
@@ -76,10 +84,12 @@ void *queues_dequeue(struct Queues *queue);
  *
  * @param queue       - A reference to the queues of the user.
  *
- * @return            - A pointer to a datastructure which is on the head of the
- *                      queue.
+ * @param data        - A buffer into which the data from the top element is
+ *                      copied.
+ *
+ * @return            - void
  */
-void *queues_peek(struct Queues *queue);
+void queues_peek(const struct Queues *queue, void *data);
 
 /*
  * queues_capacity()
@@ -93,7 +103,7 @@ void *queues_peek(struct Queues *queue);
  *
  * @return            - The capacity of the queue.
  */
-unsigned int queues_capacity(struct Queues *queue);
+unsigned int queues_capacity(const struct Queues *queue);
 
 /*
  * queues_size()
@@ -107,7 +117,21 @@ unsigned int queues_capacity(struct Queues *queue);
  *
  * @return            - The size of the queue.
  */
-unsigned int queues_size(struct Queues *queue);
+unsigned int queues_size(const struct Queues *queue);
+
+/*
+ * queues_structsize()
+ * *******************
+ * Returns the size of the elements stored in the queue.
+ *
+ * Complexity:
+ * O(1)
+ *
+ * @param queue       - A reference to the queues of the user.
+ *
+ * @return            - The size of the structs in the queue.
+ */
+unsigned int queues_structsize(const struct Queues *queue);
 
 /*
  * queues_destroy()

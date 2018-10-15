@@ -1,37 +1,45 @@
 #include "stacks.h"
 #include <stdlib.h>
 #include <stddef.h>
+#include <string.h>
+#include <stdio.h>
 
-void stacks_init(struct Stacks *stack, unsigned int capacity)
+void stacks_init(struct Stacks *stack, unsigned int capacity, unsigned int structsize)
 {
     stack->size = 0;
     stack->capacity = capacity;
-    stack->data = malloc(capacity * sizeof(void *));
+    stack->structsize = structsize;
+    stack->data = malloc(capacity * structsize);
 }
 
-void stacks_push(struct Stacks *stack, void *data)
+void stacks_push(struct Stacks *stack, const void *data)
 {
-    stack->data[stack->size++] = data;
+    memcpy(stack->data + stack->structsize * stack->size++, data, stack->structsize);
 }
 
-void *stacks_pop(struct Stacks *stack)
+void stacks_pop(struct Stacks *stack, void *data)
 {
-    return stack->data[--stack->size];
+    memcpy(data, stack->data + stack->structsize * --stack->size, stack->structsize);
 }
 
-void *stacks_peek(struct Stacks *stack)
+void stacks_peek(const struct Stacks *stack, void *data)
 {
-    return stack->data[stack->size - 1];
+    memcpy(data, stack->data + stack->structsize * (stack->size - 1), stack->structsize);
 }
 
-unsigned int stacks_capacity(struct Stacks *stack)
+unsigned int stacks_capacity(const struct Stacks *stack)
 {
     return stack->capacity;
 }
 
-unsigned int stacks_size(struct Stacks *stack)
+unsigned int stacks_size(const struct Stacks *stack)
 {
     return stack->size;
+}
+
+unsigned int stacks_structsize(const struct Stacks *stack)
+{
+    return stack->structsize;
 }
 
 void stacks_destroy(struct Stacks *stack)
