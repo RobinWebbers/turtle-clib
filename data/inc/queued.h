@@ -8,9 +8,12 @@
  * Queued
  * ******
  * A dynamic queue. To use this datastructure, allocate the Queued struct and
- * init the queue. There is no need to destroy the stack, you should make sure
- * to empty the queue if there are malloced elements in there. The queue is
- * singly linked and generic.
+ * init the queue. To free the memory from the queue, simply dequeue till the
+ * queue is empty. This queue is a singly linked list and generic. Any
+ * type of datastructure can be referenced to be copied onto the stack. For
+ * larger datastructures, storing a pointer to this datastructure is adviced.
+ * Small datastructures can be copied directly to avoid the overhead of the
+ * saved pointer.
  */
 struct Queued
 {
@@ -22,12 +25,16 @@ struct Queued
  * queued_init()
  * *************
  * Initiate the queue datastructure. This function expect a reference to an
- * already allocated structure.
+ * already allocated structure. And the sizeof the structure which will be
+ * enqueued.
  *
  * Complexity:
  * O(1)
  *
  * @param queue       - A reference to a queue.
+ *
+ * @param structsize  - The size of the datastructure which will be copied to
+ *                      nodes when adding.
  *
  * @return            - void
  */
@@ -36,7 +43,7 @@ void queued_init(struct Queued *queue, unsigned int structsize);
 /*
  * queued_enqueue()
  * ****************
- * Enqueue a pointer to a datastructure to the tail of the queue.
+ * Enqueue a datastructure to the tail of the queue.
  *
  * Complexity:
  * O(1)
@@ -53,14 +60,17 @@ void queued_enqueue(struct Queued *queue, const void *data);
 /*
  * queued_dequeue()
  * ****************
- * Dequeue a pointer to a datastructure from the head of the queue.
+ * Dequeue a datastructure from the head of the queue.
  *
  * Complexity:
  * O(1)
  *
  * @param queue       - A pointer to an initialized queue.
  *
- * @return            - A pointer to a datastructure held by the removed node.
+ * @param data        - A pointer to a buffer to which the stored data will be
+ *                      copied.
+ *
+ * @return            - void
  */
 void queued_dequeue(struct Queued *queue, void *data);
 
@@ -75,8 +85,10 @@ void queued_dequeue(struct Queued *queue, void *data);
  *
  * @param queue       - A pointer to an initialized queue.
  *
- * @return            - A pointer to a datastructure held by the head of the
- *                      queue.
+ * @param data        - A pointer to a buffer to which the stored data will be
+ *                      copied.
+ *
+ * @return            - void
  */
 void queued_peek(const struct Queued *queue, void *data);
 
@@ -90,15 +102,16 @@ void queued_peek(const struct Queued *queue, void *data);
  *
  * @param queue       - A pointer to an initialized queue.
  *
- * @param data        - A pointer to a datastructure to be added to the queue.
+ * @param data        - A pointer to the datastructure to be pushed to the
+ *                      queue.
  *
  * @return            - void
  */
 void queued_push(struct Queued *queue, const void *data);
 
 /*
- * queued_peekl()
- * **************
+ * queued_peekLast()
+ * *****************
  * Peek at the last pointer to a datastructure to be dequeued from the head of
  * the queue. This is the tail of the queue.
  *
@@ -107,8 +120,10 @@ void queued_push(struct Queued *queue, const void *data);
  *
  * @param queue       - A pointer to an initialized queue.
  *
- * @return            - A pointer to a datastructure held by the tail of the
- *                      queue.
+ * @param data        - A pointer to a buffer to which the stored data will be
+ *                      copied.
+ *
+ * @return            - void
  */
 void queued_peekLast(const struct Queued *queue, void *data);
 
