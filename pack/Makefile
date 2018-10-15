@@ -7,7 +7,7 @@ SDIR = src
 ODIR = obj
 
 CC = gcc
-CFLAGS = -I$(IDIR) -Wall
+CFLAGS = -I$(IDIR) -Wall -pedantic-errors 
 
 INC := $(wildcard $(IDIR)/*.h)
 SRC := $(wildcard $(SDIR)/*.c)

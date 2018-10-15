@@ -16,19 +16,19 @@ void queues_enqueue(struct Queues *queue, const void *data)
 {
     queue->size++;
     queue->tail = (queue->tail + 1) % queue->capacity;
-    memcpy(queue->data + queue->tail * queue->structsize, data, queue->structsize);
+    memcpy((char *)queue->data + queue->tail * queue->structsize, data, queue->structsize);
 }
 
 void queues_dequeue(struct Queues *queue, void *data)
 {
     queue->size--;
     queue->head = (queue->head + 1) % queue->capacity;
-    memcpy(data, queue->data + queue->head * queue->structsize, queue->structsize);
+    memcpy(data, (char *)queue->data + queue->head * queue->structsize, queue->structsize);
 }
 
 void queues_peek(const struct Queues *queue, void *data)
 {
-    memcpy(data, queue->data + ((queue->head + 1) % queue->capacity) * queue->structsize, queue->structsize);
+    memcpy(data, (char *)queue->data + ((queue->head + 1) % queue->capacity) * queue->structsize, queue->structsize);
 }
 
 unsigned int queues_capacity(const struct Queues *queue)

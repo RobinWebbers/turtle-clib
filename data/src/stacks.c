@@ -14,17 +14,17 @@ void stacks_init(struct Stacks *stack, unsigned int capacity, unsigned int struc
 
 void stacks_push(struct Stacks *stack, const void *data)
 {
-    memcpy(stack->data + stack->structsize * stack->size++, data, stack->structsize);
+    memcpy((char *)stack->data + stack->structsize * stack->size++, data, stack->structsize);
 }
 
 void stacks_pop(struct Stacks *stack, void *data)
 {
-    memcpy(data, stack->data + stack->structsize * --stack->size, stack->structsize);
+    memcpy(data, (char *)stack->data + stack->structsize * --stack->size, stack->structsize);
 }
 
 void stacks_peek(const struct Stacks *stack, void *data)
 {
-    memcpy(data, stack->data + stack->structsize * (stack->size - 1), stack->structsize);
+    memcpy(data, (char *)stack->data + stack->structsize * (stack->size - 1), stack->structsize);
 }
 
 unsigned int stacks_capacity(const struct Stacks *stack)
