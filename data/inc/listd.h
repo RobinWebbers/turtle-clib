@@ -2,6 +2,7 @@
 #define LISTD_H
 
 #include <stdbool.h>
+#include "node.h"
 
 
 /*
@@ -12,33 +13,27 @@
 
 struct Listd
 {
-    struct Listd *prev, *next;
-    void *data;
+    struct Node *head, *tail;
+    unsigned int structsize;
 };
 
-bool listd_search(struct Listd **list, void *data, bool (*equals)(void *, void *));
+void listd_init(struct Listd *list, unsigned int structsize);
 
-void listd_pushFront(struct Listd **list, void *data);
+void listd_pushFront(struct Listd *list, const void *data);
 
-void listd_pushBack(struct Listd **list, void *data);
+void listd_pushBack(struct Listd *list, const void *data);
 
-void listd_next(struct Listd **list);
+void listd_peekFront(struct Listd *list, void *data);
 
-void listd_prev(struct Listd **list);
+void listd_peekBack(struct Listd *list, void *data);
 
-bool listd_hasNext(struct Listd *list);
+void listd_popFront(struct Listd *list, void *data);
 
-bool listd_hasPrev(struct Listd *list);
+void listd_popBack(struct Listd *list, void *data);
 
-void listd_first(struct Listd **list);
+unsigned int listd_size(const struct Listd *list);
 
-void listd_last(struct Listd **list);
-
-void *listd_retrieve(struct Listd *list);
-
-void listd_remove(struct Listd **list);
-
-unsigned int listd_size(struct Listd *list);
+unsigned int listd_structsize(const struct Listd *list);
 
 bool listd_isEmpty(struct Listd *list);
 

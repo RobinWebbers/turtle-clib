@@ -27,7 +27,7 @@ void stackd_peek(const struct Stackd *stack, void *data, unsigned int structsize
 
 unsigned int stackd_size(const struct Stackd *stack)
 {
-    int size = 0;
+    unsigned int size = 0;
     for(; stack != NULL; stack = stack->next)
         size++;
     return size;

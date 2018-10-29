@@ -12,7 +12,6 @@
  * larger datastructures, storing a pointer to this datastructure is adviced.
  * Small datastructures can be copied directly to avoid the overhead of the
  * saved pointer.
- *
  */
 struct Node
 {
