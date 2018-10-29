@@ -7,7 +7,7 @@ SDIR = src
 ODIR = obj
 
 CC = gcc
-CFLAGS = -I$(IDIR) -Wall -pedantic-errors 
+CFLAGS = -I$(IDIR) -Wall -pedantic-errors
 
 INC := $(wildcard $(IDIR)/*.h)
 SRC := $(wildcard $(SDIR)/*.c)
@@ -23,6 +23,5 @@ $(ODIR):
 	mkdir -p $@
 
 clean:
-	-rm -f $(ODIR)/*.o *~ core.* $(IDIR)/*~
-	-rm -f $(ODIR)/*.d
-	-rm -f lib*.so
+	-rm -f lib*.so *~ core.*
+	-rm -rf $(ODIR)
