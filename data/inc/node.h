@@ -111,7 +111,7 @@ void node_remove(struct Node **node);
  * empty list.
  *
  * Complexity:
- * O(1)
+ * O(n)
  *
  * @param node        - A reference to a node pointer.
  *
@@ -126,7 +126,7 @@ void node_first(struct Node **node);
  * empty list.
  *
  * Complexity:
- * O(1)
+ * O(n)
  *
  * @param node        - A reference to a node pointer.
  *
