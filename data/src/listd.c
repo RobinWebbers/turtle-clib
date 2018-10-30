@@ -49,12 +49,12 @@ void listd_pushBack(struct Listd *list, const void *data)
     list->tail = insert;
 }
 
-void listd_peekFront(struct Listd *list, void *data)
+void listd_peekFront(const struct Listd *list, void *data)
 {
     memcpy(data, list->head + 1, list->structsize);
 }
 
-void listd_peekBack(struct Listd *list, void *data)
+void listd_peekBack(const struct Listd *list, void *data)
 {
     memcpy(data, list->tail + 1, list->structsize);
 }
@@ -87,8 +87,8 @@ void listd_popBack(struct Listd *list, void *data)
 
     if(del->prev != NULL)
     {
-        list->head = del->prev;
-        list->head->next = NULL;
+        list->tail = del->prev;
+        list->tail->next = NULL;
     }
     else
     {
@@ -112,7 +112,7 @@ unsigned int listd_structsize(const struct Listd *list)
     return list->structsize;
 }
 
-bool listd_isEmpty(struct Listd *list)
+bool listd_isEmpty(const struct Listd *list)
 {
     return list->head == NULL;
 }

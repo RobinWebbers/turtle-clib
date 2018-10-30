@@ -10,7 +10,7 @@
  * A dynamic queue. To use this datastructure, allocate the Queued struct and
  * init the queue. To free the memory from the queue, simply dequeue till the
  * queue is empty. This queue is a singly linked list and generic. Any
- * type of datastructure can be referenced to be copied onto the stack. For
+ * type of datastructure can be referenced to be copied onto the queue. For
  * larger datastructures, storing a pointer to this datastructure is adviced.
  * Small datastructures can be copied directly to avoid the overhead of the
  * saved pointer.
