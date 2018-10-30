@@ -40,4 +40,3 @@ library will probably be added to some other library a future update.
 - Add hashtable to data library
 - Add binary search tree to data library
 - Add matrix to data library
-- Add doubly linked list
