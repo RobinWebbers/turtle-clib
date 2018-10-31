@@ -29,24 +29,28 @@ void queued_dequeue(struct Queued *queue, void *data)
 {
     stackd_pop(&(queue->head), data, queue->structsize);
     if(queue->head == NULL)
+    {
         queue->tail = NULL;
+    }
 }
 
-void queued_peek(const struct Queued *queue, void *data)
+void *queued_peek(struct Queued *queue)
 {
-    memcpy(data, queue->head + 1, queue->structsize);
+    return queue->head + 1;
 }
 
 void queued_push(struct Queued *queue, const void *data)
 {
     stackd_push(&(queue->head), data, queue->structsize);
     if(queue->tail == NULL)
+    {
         queue->tail = queue->head;
+    }
 }
 
-void queued_peekLast(const struct Queued *queue, void *data)
+void *queued_peekLast(struct Queued *queue)
 {
-    memcpy(data, queue->tail + 1, queue->structsize);
+    return queue->tail + 1;
 }
 
 unsigned int queued_size(const struct Queued *queue)
@@ -74,9 +78,13 @@ void queued_insert(struct Queued *queue, const void *data, int index)
 {
     stackd_insert(&(queue->head), data, queue->structsize, index);
     if(queue->tail == NULL)
+    {
         queue->tail = queue->head;
+    }
     else if(queue->tail->next != NULL)
+    {
         queue->tail = queue->tail->next;
+    }
 }
 
 void queued_remove(struct Queued *queue, void *data, int index)
@@ -94,7 +102,9 @@ void queued_remove(struct Queued *queue, void *data, int index)
     }
 
     if(queue->tail == *curr)
+    {
         queue->tail = del;
+    }
 
     del = *curr;
     *curr = del->next;

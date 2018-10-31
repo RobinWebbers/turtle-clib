@@ -103,7 +103,9 @@ unsigned int listd_size(const struct Listd *list)
 {
     unsigned int size = 0;
     for(struct Node *node = list->head; node != NULL; node = node->next)
+    {
         size++;
+    }
     return size;
 }
 

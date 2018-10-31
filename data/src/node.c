@@ -44,9 +44,9 @@ void node_insertBefore(struct Node **node, const void *data, unsigned int struct
     *node = insert;
 }
 
-void node_peek(struct Node *node, void *data, unsigned int structsize)
+void *node_peek(struct Node *node)
 {
-    memcpy(data, node + 1, structsize);
+    return node + 1;
 }
 
 void node_remove(struct Node **node)

@@ -1,6 +1,8 @@
 #ifndef STACKD_H
 #define STACKD_H
 
+#include <stdbool.h>
+
 /*
  * Stackd
  * ******
@@ -66,8 +68,9 @@ void stackd_pop(struct Stackd **stack, void *data, unsigned int structsize);
 /*
  * stackd_peek()
  * *************
- * Peek at the datastructure on the top of the stack. Data should be a reference
- * to a buffer of apropriate size for the peeked at datastructure.
+ * Peek at the datastructure on the top of the stack. This pointer can be made
+ * invalid upon removing the node which carries this data. Please copy it if
+ * persistent usage is needed.
  *
  * Complexity:
  * O(1)
@@ -75,15 +78,10 @@ void stackd_pop(struct Stackd **stack, void *data, unsigned int structsize);
  * @param stack       - The stackd * of the user. Checking whether the stack is
  *                      empty is the users responsibility.
  *
- * @param data        - A pointer to a buffer to which the data the top node
- *                      holds can be copied to.
- *
- * @param structsize  - The size of the datastructure which will be copied to
- *                      the buffer passed.
- *
- * @return            - void
+ * @return            - Returns a pointer to the datastructure the top node
+ *                      holds.
  */
-void stackd_peek(const struct Stackd *stack, void *data, unsigned int structsize);
+void *stackd_peek(struct Stackd *stack);
 
 /*
  * stackd_size()
@@ -156,10 +154,38 @@ void stackd_insert(struct Stackd **stack, const void *data, unsigned int structs
  *
  * @param index       - The index of the element to be removed.
  *
- * @return            - A pointer to the datastructure the node which was
- *                      removed held.
+ * @return            - void
  */
 void stackd_remove(struct Stackd **stack, void *data, unsigned int structsize, unsigned int index);
+
+/*
+ * stackd_contains()
+ * *****************
+ * Check whether the stack contains data which corresponds to the given key. The
+ * first occurrence of the key is returned. A NULL is returned upon unsuccesful
+ * search. The compare function evaluates the key as the first argument and the
+ * data as the second argument. Upon a succesful compare, the function should
+ * return 0. This pointer can be made invalid upon removing the node which
+ * carries this data. Please copy it if persistent usage is needed.
+ *
+ *
+ * Complexity:
+ * O(n)
+ *
+ * @param stack       - The stackd * of the user. Checking whether the stack is
+ *                      empty is the users responsibility.
+ *
+ * @param key         - A key for which the stack is searched to find the first
+ *                      node whose data corresponds to it.
+ *
+ * @param compare     - A pointer to a compare function. It takes as first
+ *                      argument the key and as second argument the data. It
+ *                      returns 0 upon finding equality.
+ *
+ * @return            - Returns a pointer to the datastructure of a node whose
+ *                      data corresponds to the given key.
+ */
+void *stackd_contains(struct Stackd *stack, const void *key, int (*compare)(const void *, const void *));
 
 /*
  * stackd_pushLast()
@@ -178,8 +204,7 @@ void stackd_remove(struct Stackd **stack, void *data, unsigned int structsize, u
  * @param structsize  - The size of the datastructure which will be copied to
  *                      the node inserted into the stack.
  *
- * @return            - A pointer to the datastructure the node which was
- *                      removed held.
+ * @return            - void
  */
 void stackd_pushLast(struct Stackd **stack, const void *data, unsigned int structsize);
 
@@ -200,15 +225,17 @@ void stackd_pushLast(struct Stackd **stack, const void *data, unsigned int struc
  * @param structsize  - The size of the datastructure which will be copied to
  *                      the buffer passed.
  *
- * @return            - A pointer to the datastructure previously pushed onto
- *                      the stack.
+ * @return            - void
  */
 void stackd_popLast(struct Stackd **stack, void *data, unsigned int structsize);
 
 /*
  * stackd_peekLast()
  * *****************
- * Peek at a pointer to a datastructure from the bottom of the stack.
+ * Peek at the datastructure on the bottom of the stack. This pointer can be
+ * made invalid upon removing the node which carries this data. Please copy it
+ * if persistent usage is needed.
+ *
  *
  * Complexity:
  * O(n)
@@ -216,14 +243,8 @@ void stackd_popLast(struct Stackd **stack, void *data, unsigned int structsize);
  * @param stack       - The stackd * of the user. Checking whether the stack is
  *                      empty is the users responsibility.
  *
- * @param data        - A pointer to a buffer to which the data the last node
- *                      holds can be copied to.
- *
- * @param structsize  - The size of the datastructure which will be copied to
- *                      the buffer passed.
- *
  * @return            - A pointer to the datastructure the bottom node holds.
  */
-void stackd_peekLast(const struct Stackd *stack, void *data, unsigned int structsize);
+void *stackd_peekLast(struct Stackd *stack);
 
 #endif

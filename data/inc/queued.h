@@ -78,19 +78,17 @@ void queued_dequeue(struct Queued *queue, void *data);
  * queued_peek()
  * *************
  * Peek at the next pointer to a datastructure to be dequeued from the head of
- * the queue.
+ * the queue. This pointer can be made invalid upon removing the node which
+ * carries this data. Please copy it if persistent usage is needed.
  *
  * Complexity:
  * O(1)
  *
  * @param queue       - A pointer to an initialized queue.
  *
- * @param data        - A pointer to a buffer to which the stored data will be
- *                      copied.
- *
- * @return            - void
+ * @return            - Returns a pointer to the datastructure the head holds.
  */
-void queued_peek(const struct Queued *queue, void *data);
+void *queued_peek(struct Queued *queue);
 
 /*
  * queued_push()
@@ -113,19 +111,18 @@ void queued_push(struct Queued *queue, const void *data);
  * queued_peekLast()
  * *****************
  * Peek at the last pointer to a datastructure to be dequeued from the head of
- * the queue. This is the tail of the queue.
+ * the queue. This is the tail of the queue. This pointer can be made invalid
+ * upon removing the node which carries this data. Please copy it if persistent
+ * usage is needed.
  *
  * Complexity:
  * O(1)
  *
  * @param queue       - A pointer to an initialized queue.
  *
- * @param data        - A pointer to a buffer to which the stored data will be
- *                      copied.
- *
- * @return            - void
+ * @return            - Returns a pointer to the datastructure the tail holds.
  */
-void queued_peekLast(const struct Queued *queue, void *data);
+void *queued_peekLast(struct Queued *queue);
 
 /*
  * queued_size()

@@ -69,23 +69,18 @@ void node_insertBefore(struct Node **node, const void *data, unsigned int struct
 /*
  * node_peek()
  * ***********
- * Peek at the datastructure in the current node. Data should be a reference to
- * a buffer of apropriate size for the peeked at datastructure.
+ * Peek at the datastructure in the current node. This pointer can be made
+ * invalid upon removing the node which carries this data. Please copy it if
+ * persistent usage is needed.
  *
  * Complexity:
  * O(1)
  *
  * @param node        - A node pointer.
  *
- * @param data        - A pointer to the datastructure to be inserted with the
- *                      new node.
- *
- * @param structsize  - The size of the datastructure which will be copied to
- *                      the new node.
- *
  * @return            - void
  */
-void node_peek(struct Node *node, void *data, unsigned int structsize);
+void *node_peek(struct Node *node);
 
 /*
  * node_remove()
